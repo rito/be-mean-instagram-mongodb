@@ -35,3 +35,15 @@ Exercício de Importação de um JSON.
 - criar uma nova base
 - uma nova collection
 - inserir, listar e salvar Pokemons
+
+
+# Aula 03
+
+- UUID - universal ID. Mongo não possui auto incremento. (Burrice o auto incremento! )
+
+# Aula 4
+- Updates
+
+# Aula 5 (WBruno)
+- Aggregates
+- Groups
