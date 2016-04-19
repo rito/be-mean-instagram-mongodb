@@ -203,23 +203,98 @@ Fetched 5 record(s) in 35ms
 ## 4. Group ou Aggregate contando a quantidade de pokemons de cada tipo.
 
 ```
-db.pokemons.group({
-  initial: {total: 0},
-    reduce: function(current, result){
-      result.total++;
-      current.types.forEach(function(type){
-        if(result[type]){
-          result[type]++;
-          } else {
-            result[type] = 1;
-          }
-      });
+
+db.pokemons.aggregate([
+  {
+    $unwind: "$types"
+  }
+  , {
+    $group: {
+      _id: "$types"
+      , total: { $sum: 1 }
     }
-});
+  }
+]);
 
 
 
-
+{
+  "result": [
+    {
+      "_id": "fairy",
+      "total": 28
+    },
+    {
+      "_id": "fighting",
+      "total": 38
+    },
+    {
+      "_id": "psychic",
+      "total": 62
+    },
+    {
+      "_id": "rock",
+      "total": 46
+    },
+    {
+      "_id": "flying",
+      "total": 77
+    },
+    {
+      "_id": "fire",
+      "total": 47
+    },
+    {
+      "_id": "ice",
+      "total": 24
+    },
+    {
+      "_id": "bug",
+      "total": 61
+    },
+    {
+      "_id": "poison",
+      "total": 54
+    },
+    {
+      "_id": "dark",
+      "total": 38
+    },
+    {
+      "_id": "ground",
+      "total": 51
+    },
+    {
+      "_id": "grass",
+      "total": 75
+    },
+    {
+      "_id": "electric",
+      "total": 40
+    },
+    {
+      "_id": "steel",
+      "total": 37
+    },
+    {
+      "_id": "ghost",
+      "total": 34
+    },
+    {
+      "_id": "dragon",
+      "total": 20
+    },
+    {
+      "_id": "water",
+      "total": 105
+    },
+    {
+      "_id": "normal",
+      "total": 78
+    }
+  ],
+  "ok": 1
+}
 
 
 
@@ -238,12 +313,14 @@ db.pokemons.count()
 
 ### 5.2 - Só do tipo "Fogo"
 ```
-
 db.pokemons.count({types: 'fire'})
+
 47
 ```
 ### 5.3 - ó de quantos tem a defesa maior que 70?
 ```
 db.pokemons.count({defense: {$gt: 70}})
+
+250
 
 ```
